@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Order Submission</title>
+</head>
+<body>
+    <h1>Test Order Form</h1>
+    <button onclick="testOrder()">Submit Test Order</button>
+    <div id="result"></div>
+
+    <script>
+        async function testOrder() {
+            const testData = {
+                firstName: 'Test',
+                lastName: 'User',
+                phoneNumber: '1234567890',
+                whatsappNumber: '1234567890',
+                state: 'Lagos',
+                deliveryAddress: 'Test Address',
+                availability: 'yes'
+            };
+
+            try {
+                const response = await fetch('/api/orders', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testData)
+                });
+
+                const result = await response.json();
+                document.getElementById('result').innerHTML = `
+                    <h3>Response:</h3>
+                    <pre>${JSON.stringify(result, null, 2)}</pre>
+                    <p>Status: ${response.status}</p>
+                `;
+            } catch (error) {
+                document.getElementById('result').innerHTML = `
+                    <h3>Error:</h3>
+                    <p>${error.message}</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

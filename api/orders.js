@@ -12,6 +12,13 @@ export default async function handler(req, res) {
     };
     
     try {
+      // Check if GitHub token is available
+      if (!GITHUB_TOKEN) {
+        throw new Error('GitHub token not configured. Add GITHUB_TOKEN to environment variables.');
+      }
+      
+      console.log('Attempting to fetch orders from GitHub...');
+      
       // Get existing orders from GitHub
       const getResponse = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
         headers: {
@@ -19,6 +26,8 @@ export default async function handler(req, res) {
           'Accept': 'application/vnd.github.v3+json'
         }
       });
+      
+      console.log('GitHub GET response status:', getResponse.status);
       
       let existingOrders = [];
       let sha = null;
@@ -48,15 +57,20 @@ export default async function handler(req, res) {
         })
       });
       
+      console.log('GitHub PUT response status:', updateResponse.status);
+      
       if (updateResponse.ok) {
         console.log('Order saved to GitHub:', orderData);
         res.status(200).json({ 
           success: true, 
           message: 'Order saved permanently to GitHub',
-          orderId: orderData.id
+          orderId: orderData.id,
+          totalOrders: existingOrders.length
         });
       } else {
-        throw new Error('Failed to update GitHub file');
+        const errorText = await updateResponse.text();
+        console.error('GitHub PUT error:', errorText);
+        throw new Error(`Failed to update GitHub file: ${updateResponse.status}`);
       }
       
     } catch (error) {
