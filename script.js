@@ -139,26 +139,22 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Form data:', data);
             
             try {
-                const response = await fetch('/api/orders', {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbzCBLxirOEPVybjO1lMTcjiTzGV-rVPiFDaPBNJiOJSOu6z8bmKuItZbIHJECaIJGaR/exec', {
                     method: 'POST',
+                    mode: 'no-cors',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: JSON.stringify(data)
+                    body: new URLSearchParams(data)
                 });
                 
-                const result = await response.json();
-                console.log('API response:', result);
-                
-                if (response.ok && result.success) {
-                    if (errorMessage) {
-                        errorMessage.textContent = '';
-                    }
-                    orderForm.reset();
-                    showSuccessPopup();
-                } else {
-                    throw new Error(result.message || 'Failed to submit order');
+                // With no-cors mode, we can't read the response
+                // Assume success if no error is thrown
+                if (errorMessage) {
+                    errorMessage.textContent = '';
                 }
+                orderForm.reset();
+                showSuccessPopup();
                 
             } catch (error) {
                 console.error('Error:', error);
