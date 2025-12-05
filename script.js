@@ -114,22 +114,58 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (orderForm && orderForm.tagName === 'FORM') {
         console.log('Order form found, adding event listener');
-        orderForm.addEventListener('submit', function(e) {
+        orderForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            console.log('JavaScript form submission triggered');
+            
             // Show loading message
             if (errorMessage) {
                 errorMessage.textContent = 'Submitting order...';
                 errorMessage.style.color = 'blue';
             }
             
-            // Show success popup after a short delay
-            setTimeout(function() {
-                showSuccessPopup();
-                if (errorMessage) {
-                    errorMessage.textContent = '';
-                }
-            }, 1000);
+            const formData = new FormData(orderForm);
+            const data = {
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                phoneNumber: formData.get('phoneNumber'),
+                whatsappNumber: formData.get('whatsappNumber'),
+                state: formData.get('state'),
+                deliveryAddress: formData.get('deliveryAddress'),
+                availability: formData.get('availability')
+            };
             
-            // Let the form submit normally to Google Apps Script
+            console.log('Form data:', data);
+            
+            try {
+                const response = await fetch('/api/orders', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                console.log('API response:', result);
+                
+                if (response.ok && result.success) {
+                    if (errorMessage) {
+                        errorMessage.textContent = '';
+                    }
+                    orderForm.reset();
+                    showSuccessPopup();
+                } else {
+                    throw new Error(result.message || 'Failed to submit order');
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                if (errorMessage) {
+                    errorMessage.textContent = 'Error submitting order. Please try again.';
+                    errorMessage.style.color = 'red';
+                }
+            }
         });
     } else {
         console.error('Order form not found');
