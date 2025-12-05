@@ -170,11 +170,20 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.appendChild(hiddenForm);
             hiddenForm.submit();
             
-            // Clean up after submission
+            // Wait longer for Google Apps Script to process
             setTimeout(() => {
-                document.body.removeChild(hiddenForm);
-                document.body.removeChild(iframe);
-            }, 1000);
+                // Submit again after 2 seconds to ensure it's processed
+                const retryForm = hiddenForm.cloneNode(true);
+                document.body.appendChild(retryForm);
+                retryForm.submit();
+                
+                // Clean up after both submissions
+                setTimeout(() => {
+                    document.body.removeChild(hiddenForm);
+                    document.body.removeChild(retryForm);
+                    document.body.removeChild(iframe);
+                }, 1000);
+            }, 2000);
             
             // Show success immediately
             if (errorMessage) {
