@@ -143,22 +143,33 @@ document.addEventListener('DOMContentLoaded', () => {
             
             console.log('Form data:', data);
             
-            try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbzCBLxirOEPVybjO1lMTcjiTzGV-rVPiFDaPBNJiOJSOu6z8bmKuItZbIHJECaIJGaR/exec', {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams(data)
-                });
-                
-                // With no-cors mode, assume success if no error thrown
-                if (errorMessage) {
-                    errorMessage.textContent = '';
-                }
-                orderForm.reset();
-                showSuccessPopup();
+            // Create hidden form for direct submission to Google Apps Script
+            const hiddenForm = document.createElement('form');
+            hiddenForm.method = 'POST';
+            hiddenForm.action = 'https://script.google.com/macros/s/AKfycbzCBLxirOEPVybjO1lMTcjiTzGV-rVPiFDaPBNJiOJSOu6z8bmKuItZbIHJECaIJGaR/exec';
+            hiddenForm.target = '_blank';
+            hiddenForm.style.display = 'none';
+            
+            // Add form data as hidden inputs
+            Object.keys(data).forEach(key => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = data[key];
+                hiddenForm.appendChild(input);
+            });
+            
+            // Submit the form
+            document.body.appendChild(hiddenForm);
+            hiddenForm.submit();
+            document.body.removeChild(hiddenForm);
+            
+            // Show success immediately
+            if (errorMessage) {
+                errorMessage.textContent = '';
+            }
+            orderForm.reset();
+            showSuccessPopup();
                 
             } catch (error) {
                 console.error('Error:', error);
