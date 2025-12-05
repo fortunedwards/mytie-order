@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Google Apps Script</title>
+</head>
+<body>
+    <h1>Test Google Apps Script Connection</h1>
+    
+    <form id="test-form">
+        <input name="firstName" value="Test" placeholder="First Name"><br><br>
+        <input name="lastName" value="User" placeholder="Last Name"><br><br>
+        <input name="phoneNumber" value="1234567890" placeholder="Phone"><br><br>
+        <input name="whatsappNumber" value="1234567890" placeholder="WhatsApp"><br><br>
+        <input name="state" value="Lagos" placeholder="State"><br><br>
+        <textarea name="deliveryAddress" placeholder="Address">Test Address</textarea><br><br>
+        <input type="radio" name="availability" value="yes" checked> Yes<br><br>
+        <button type="submit">Test Submit</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('test-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            console.log('Sending data:', data);
+            document.getElementById('result').innerHTML = 'Sending...';
+            
+            try {
+                // Test with direct form submission
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'https://script.google.com/macros/s/AKfycbzCBLxirOEPVybjO1lMTcjiTzGV-rVPiFDaPBNJiOJSOu6z8bmKuItZbIHJECaIJGaR/exec';
+                form.target = '_blank';
+                
+                Object.keys(data).forEach(key => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = data[key];
+                    form.appendChild(input);
+                });
+                
+                document.body.appendChild(form);
+                form.submit();
+                document.body.removeChild(form);
+                
+                document.getElementById('result').innerHTML = 'Form submitted! Check Google Sheet and new tab for response.';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = 'Error: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -14,11 +14,27 @@ function handleRequest(e) {
     const SHEET_ID = '1c7hOSsv3YOToXA3vTX2fHIFmH9D8cH0MdOwkPvqOF1s';
     const sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
     
-    // Get form data from parameters
-    const data = e.parameter || {};
+    // Log everything for debugging
+    console.log('Full event object:', JSON.stringify(e));
+    console.log('Parameters:', JSON.stringify(e.parameter));
+    console.log('Post data:', e.postData ? JSON.stringify(e.postData) : 'No post data');
     
-    // Log the received data for debugging
-    console.log('Received data:', JSON.stringify(data));
+    // Get form data from parameters
+    let data = e.parameter || {};
+    
+    // If no parameters, try to parse post data
+    if (Object.keys(data).length === 0 && e.postData) {
+      try {
+        if (e.postData.type === 'application/x-www-form-urlencoded') {
+          const params = new URLSearchParams(e.postData.contents);
+          data = Object.fromEntries(params);
+        }
+      } catch (parseError) {
+        console.error('Parse error:', parseError);
+      }
+    }
+    
+    console.log('Final data to save:', JSON.stringify(data));
     
     // Create headers if this is the first submission
     if (sheet.getLastRow() === 0) {
