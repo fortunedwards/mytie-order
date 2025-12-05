@@ -110,10 +110,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Form submission debugging
     console.log('Looking for order form...');
-    const orderForm = document.getElementById('order-form');
+    const orderFormSection = document.getElementById('order-form');
+    const orderForm = orderFormSection ? orderFormSection.querySelector('form') : null;
     const errorMessage = document.querySelector('.error-message');
     
-    console.log('Order form element:', orderForm);
+    console.log('Order form section:', orderFormSection);
+    console.log('Actual form element:', orderForm);
     console.log('Error message element:', errorMessage);
     
     if (orderForm && orderForm.tagName === 'FORM') {
