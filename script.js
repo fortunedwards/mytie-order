@@ -143,11 +143,17 @@ document.addEventListener('DOMContentLoaded', () => {
             
             console.log('Form data:', data);
             
-            // Create hidden form for direct submission to Google Apps Script
+            // Create hidden iframe for submission
+            const iframe = document.createElement('iframe');
+            iframe.name = 'hidden_iframe';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            
+            // Create form targeting the iframe
             const hiddenForm = document.createElement('form');
             hiddenForm.method = 'POST';
             hiddenForm.action = 'https://script.google.com/macros/s/AKfycby56y787fD1rjF5VUmwiOV_kFnKAnA67zByztoMqDArAqBwZMG3BSTMMg2UNIuOZL3_2Q/exec';
-            hiddenForm.target = '_blank';
+            hiddenForm.target = 'hidden_iframe';
             hiddenForm.style.display = 'none';
             
             // Add form data as hidden inputs
@@ -162,7 +168,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Submit the form
             document.body.appendChild(hiddenForm);
             hiddenForm.submit();
-            document.body.removeChild(hiddenForm);
+            
+            // Clean up after submission
+            setTimeout(() => {
+                document.body.removeChild(hiddenForm);
+                document.body.removeChild(iframe);
+            }, 1000);
             
             // Show success immediately
             if (errorMessage) {
