@@ -118,6 +118,50 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Actual form element:', orderForm);
     console.log('Error message element:', errorMessage);
     
+    // Check if we should send pending data after reload
+    const urlParams = new URLSearchParams(window.location.search);
+    const pendingData = localStorage.getItem('pendingOrderData');
+    
+    if (urlParams.get('success') === 'true' && pendingData) {
+        // Send data again after reload to ensure it reaches Google Sheets
+        const data = JSON.parse(pendingData);
+        console.log('Sending data after reload:', data);
+        
+        // Create hidden iframe for submission
+        const iframe = document.createElement('iframe');
+        iframe.name = 'hidden_iframe';
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+        
+        // Create form targeting the iframe
+        const hiddenForm = document.createElement('form');
+        hiddenForm.method = 'POST';
+        hiddenForm.action = 'https://script.google.com/macros/s/AKfycby56y787fD1rjF5VUmwiOV_kFnKAnA67zByztoMqDArAqBwZMG3BSTMMg2UNIuOZL3_2Q/exec';
+        hiddenForm.target = 'hidden_iframe';
+        hiddenForm.style.display = 'none';
+        
+        // Add form data as hidden inputs
+        Object.keys(data).forEach(key => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = data[key];
+            hiddenForm.appendChild(input);
+        });
+        
+        // Submit the form
+        document.body.appendChild(hiddenForm);
+        hiddenForm.submit();
+        
+        // Clean up after submission
+        setTimeout(() => {
+            localStorage.removeItem('pendingOrderData');
+            showSuccessPopup();
+            // Clean up URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }, 2000);
+    }
+    
     if (orderForm && orderForm.tagName === 'FORM') {
         console.log('Order form found, adding event listener');
         orderForm.addEventListener('submit', async (e) => {
@@ -144,56 +188,43 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Form data:', data);
             
             try {
-                // Create hidden iframe for submission
-            const iframe = document.createElement('iframe');
-            iframe.name = 'hidden_iframe';
-            iframe.style.display = 'none';
-            document.body.appendChild(iframe);
-            
-            // Create form targeting the iframe
-            const hiddenForm = document.createElement('form');
-            hiddenForm.method = 'POST';
-            hiddenForm.action = 'https://script.google.com/macros/s/AKfycby56y787fD1rjF5VUmwiOV_kFnKAnA67zByztoMqDArAqBwZMG3BSTMMg2UNIuOZL3_2Q/exec';
-            hiddenForm.target = 'hidden_iframe';
-            hiddenForm.style.display = 'none';
-            
-            // Add form data as hidden inputs
-            Object.keys(data).forEach(key => {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = key;
-                input.value = data[key];
-                hiddenForm.appendChild(input);
-            });
-            
-            // Submit the form
-            document.body.appendChild(hiddenForm);
-            hiddenForm.submit();
-            
-            // Wait longer for Google Apps Script to process
-            setTimeout(() => {
-                // Submit again after 2 seconds to ensure it's processed
-                const retryForm = hiddenForm.cloneNode(true);
-                document.body.appendChild(retryForm);
-                retryForm.submit();
+                // Store data in localStorage for post-reload submission
+                localStorage.setItem('pendingOrderData', JSON.stringify(data));
                 
-                // Clean up after both submissions
+                // Create hidden iframe for initial submission
+                const iframe = document.createElement('iframe');
+                iframe.name = 'hidden_iframe';
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+                
+                // Create form targeting the iframe
+                const hiddenForm = document.createElement('form');
+                hiddenForm.method = 'POST';
+                hiddenForm.action = 'https://script.google.com/macros/s/AKfycby56y787fD1rjF5VUmwiOV_kFnKAnA67zByztoMqDArAqBwZMG3BSTMMg2UNIuOZL3_2Q/exec';
+                hiddenForm.target = 'hidden_iframe';
+                hiddenForm.style.display = 'none';
+                
+                // Add form data as hidden inputs
+                Object.keys(data).forEach(key => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = data[key];
+                    hiddenForm.appendChild(input);
+                });
+                
+                // Submit the form
+                document.body.appendChild(hiddenForm);
+                hiddenForm.submit();
+                
+                // Wait for submission to complete, then reload with success parameter
                 setTimeout(() => {
-                    document.body.removeChild(hiddenForm);
-                    document.body.removeChild(retryForm);
-                    document.body.removeChild(iframe);
-                }, 1000);
-            }, 2000);
-            
-            // Show success immediately
-            if (errorMessage) {
-                errorMessage.textContent = '';
-            }
-            orderForm.reset();
-            showSuccessPopup();
+                    window.location.href = window.location.pathname + '?success=true';
+                }, 2000);
                 
             } catch (error) {
                 console.error('Error:', error);
+                localStorage.removeItem('pendingOrderData');
                 if (errorMessage) {
                     errorMessage.textContent = 'Error submitting order. Please try again.';
                     errorMessage.style.color = 'red';
