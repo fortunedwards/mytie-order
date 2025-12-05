@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Create hidden form for direct submission to Google Apps Script
             const hiddenForm = document.createElement('form');
             hiddenForm.method = 'POST';
-            hiddenForm.action = 'https://script.google.com/macros/s/AKfycbzCBLxirOEPVybjO1lMTcjiTzGV-rVPiFDaPBNJiOJSOu6z8bmKuItZbIHJECaIJGaR/exec';
+            hiddenForm.action = 'https://script.google.com/macros/s/AKfycby56y787fD1rjF5VUmwiOV_kFnKAnA67zByztoMqDArAqBwZMG3BSTMMg2UNIuOZL3_2Q/exec';
             hiddenForm.target = '_blank';
             hiddenForm.style.display = 'none';
             
