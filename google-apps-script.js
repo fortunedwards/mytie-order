@@ -3,12 +3,22 @@
 
 function doPost(e) {
   try {
-    // Get the active spreadsheet using the provided sheet ID
     const SHEET_ID = '1c7hOSsv3YOToXA3vTX2fHIFmH9D8cH0MdOwkPvqOF1s';
     const sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
     
-    // Parse the form data
-    const data = e.parameter;
+    // Get form data from different possible sources
+    let data = e.parameter || {};
+    
+    // If no parameter data, try parsing the post data
+    if (Object.keys(data).length === 0 && e.postData) {
+      try {
+        data = JSON.parse(e.postData.contents);
+      } catch (parseError) {
+        // If JSON parsing fails, try URL-encoded data
+        const params = new URLSearchParams(e.postData.contents);
+        data = Object.fromEntries(params);
+      }
+    }
     
     // Create headers if this is the first submission
     if (sheet.getLastRow() === 0) {
@@ -21,22 +31,20 @@ function doPost(e) {
     // Add the new row of data
     sheet.appendRow([
       new Date(),
-      data.firstName || '',
-      data.lastName || '',
-      data.phoneNumber || '',
-      data.whatsappNumber || '',
-      data.state || '',
-      data.deliveryAddress || '',
-      data.availability || ''
+      data.firstName || 'N/A',
+      data.lastName || 'N/A',
+      data.phoneNumber || 'N/A',
+      data.whatsappNumber || 'N/A',
+      data.state || 'N/A',
+      data.deliveryAddress || 'N/A',
+      data.availability || 'N/A'
     ]);
     
-    // Return success response
     return ContentService
       .createTextOutput(JSON.stringify({status: 'success', message: 'Order submitted successfully'}))
       .setMimeType(ContentService.MimeType.JSON);
       
   } catch (error) {
-    // Return error response
     return ContentService
       .createTextOutput(JSON.stringify({status: 'error', message: error.toString()}))
       .setMimeType(ContentService.MimeType.JSON);
