@@ -2,41 +2,21 @@
 // Deploy this as a web app with execute permissions set to "Anyone"
 
 function doPost(e) {
-  return handleRequest(e);
+  return saveOrder(e);
 }
 
 function doGet(e) {
-  return handleRequest(e);
+  return saveOrder(e);
 }
 
-function handleRequest(e) {
+function saveOrder(e) {
   try {
     const SHEET_ID = '1c7hOSsv3YOToXA3vTX2fHIFmH9D8cH0MdOwkPvqOF1s';
     const sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
     
-    // Log everything for debugging
-    console.log('Full event object:', JSON.stringify(e));
-    console.log('Parameters:', JSON.stringify(e.parameter));
-    console.log('Post data:', e.postData ? JSON.stringify(e.postData) : 'No post data');
+    const data = e.parameter;
+    console.log('Received order:', JSON.stringify(data));
     
-    // Get form data from parameters
-    let data = e.parameter || {};
-    
-    // If no parameters, try to parse post data
-    if (Object.keys(data).length === 0 && e.postData) {
-      try {
-        if (e.postData.type === 'application/x-www-form-urlencoded') {
-          const params = new URLSearchParams(e.postData.contents);
-          data = Object.fromEntries(params);
-        }
-      } catch (parseError) {
-        console.error('Parse error:', parseError);
-      }
-    }
-    
-    console.log('Final data to save:', JSON.stringify(data));
-    
-    // Create headers if this is the first submission
     if (sheet.getLastRow() === 0) {
       sheet.getRange(1, 1, 1, 8).setValues([[
         'Timestamp', 'First Name', 'Last Name', 'Phone Number', 
@@ -44,28 +24,21 @@ function handleRequest(e) {
       ]]);
     }
     
-    // Add the new row of data
     sheet.appendRow([
       new Date(),
-      data.firstName || 'N/A',
-      data.lastName || 'N/A',
-      data.phoneNumber || 'N/A',
-      data.whatsappNumber || 'N/A',
-      data.state || 'N/A',
-      data.deliveryAddress || 'N/A',
-      data.availability || 'N/A'
+      data.firstName || '',
+      data.lastName || '',
+      data.phoneNumber || '',
+      data.whatsappNumber || '',
+      data.state || '',
+      data.deliveryAddress || '',
+      data.availability || ''
     ]);
     
-    console.log('Order saved successfully');
+    return ContentService.createTextOutput('Order saved successfully!');
     
-    return ContentService
-      .createTextOutput('SUCCESS')
-      .setMimeType(ContentService.MimeType.TEXT);
-      
   } catch (error) {
-    console.error('Error:', error.toString());
-    return ContentService
-      .createTextOutput('ERROR: ' + error.toString())
-      .setMimeType(ContentService.MimeType.TEXT);
+    console.error('Error saving order:', error);
+    return ContentService.createTextOutput('Error: ' + error.toString());
   }
 }

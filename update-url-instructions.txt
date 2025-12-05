@@ -1,0 +1,14 @@
+INSTRUCTIONS TO FIX 405 ERROR:
+
+1. Copy the simplified Google Apps Script code from google-apps-script.js
+2. Paste it into your Google Apps Script project
+3. Deploy as new web app:
+   - Execute as: Me
+   - Who has access: Anyone
+4. Copy the new deployment URL
+5. Replace this URL in script.js:
+   
+   OLD: https://script.google.com/macros/s/AKfycbzCBLxirOEPVybjO1lMTcjiTzGV-rVPiFDaPBNJiOJSOu6z8bmKuItZbIHJECaIJGaR/exec
+   NEW: [YOUR NEW DEPLOYMENT URL]
+
+The 405 error happens when the Google Apps Script deployment is not properly configured or the URL is outdated.
