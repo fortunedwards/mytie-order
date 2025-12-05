@@ -1,0 +1,384 @@
+/* Base Styles */
+:root {
+    --primary-color: #004c8c; /* Dark Blue - Professional/Classic */
+    --secondary-color: #f7b32b; /* Gold/Yellow - Accent/Luxury */
+    --text-color: #333;
+    --light-bg: #f8f8f8;
+    --max-width: 1200px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+section {
+    padding: 60px 20px;
+    margin: auto;
+    max-width: var(--max-width);
+}
+
+h1, h2, h3 {
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+/* Call-to-Action Buttons */
+.cta-button {
+    display: inline-block;
+    padding: 15px 30px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.primary:hover {
+    background-color: #00335c; /* Darker primary */
+}
+
+.secondary {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.secondary:hover {
+    background-color: #e6a21a; /* Darker secondary */
+}
+
+/* --- 1. Hero Section --- */
+.hero {
+    background-color: var(--light-bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px 20px;
+    min-height: 60vh;
+    gap: 40px;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+}
+
+.hero-content p {
+    font-size: 1.25rem;
+    margin-bottom: 30px;
+}
+
+.hero-image {
+    flex: 1;
+    text-align: right;
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* --- 2. Product Showcase/Gallery --- */
+.showcase {
+    text-align: center;
+}
+
+.product-grid {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.product-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0 0 20px 0;
+    width: 30%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.slider-container {
+    width: 100%;
+    margin-bottom: 15px;
+    height: 250px;
+}
+
+.slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.slide.active-slide {
+    display: block;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+
+.prev-button, .next-button {
+    cursor: pointer;
+    position: absolute;
+    top: 130px;
+    width: auto;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    z-index: 10;
+}
+
+.next-button {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev-button:hover, .next-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.product-card h3, .product-card p {
+    padding: 0 20px;
+    text-align: center;
+}
+
+.product-card .buy-button {
+    margin: 0 20px;
+}
+
+.buy-button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: opacity 0.3s;
+}
+.buy-button:hover {
+    opacity: 0.9;
+}
+
+/* --- 3. Value Proposition --- */
+.value-prop {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+}
+
+.value-prop h2 {
+    color: white;
+}
+
+.value-points {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.point {
+    flex-basis: 30%;
+}
+
+.point h3 {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+}
+
+/* --- 4. Testimonials --- */
+.testimonials {
+    text-align: center;
+    background-color: var(--light-bg);
+}
+
+.testimonial-card {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 30px;
+    background: white;
+    border-left: 5px solid var(--secondary-color);
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+blockquote {
+    font-style: italic;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+/* --- 5. Lead Capture Form --- */
+.lead-capture {
+    text-align: center;
+}
+
+.newsletter-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.newsletter-form input[type="email"] {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+    max-width: 400px;
+    height: 50px;
+    outline: none;
+    margin-bottom: 5px;
+}
+
+.newsletter-form .cta-button {
+    padding: 12px 25px;
+    height: 50px;
+    border-radius: 5px;
+    margin-left: 0;
+    vertical-align: top;
+}
+
+.error-message {
+    display: block;
+    color: #ff4444;
+    font-size: 0.9em;
+    margin-top: 5px;
+    height: 1.2em;
+    line-height: 1.2;
+}
+
+/* --- 6. FAQ Section --- */
+.faq {
+    background-color: var(--light-bg);
+}
+
+.faq-item {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden; /* Ensures content doesn't show when closed */
+}
+
+.faq-question {
+    width: 100%;
+    background-color: white;
+    color: var(--text-color);
+    padding: 15px 20px;
+    text-align: left;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.faq-question::after {
+    content: '+'; /* Plus sign for closed state */
+    font-size: 1.5rem;
+    font-weight: normal;
+}
+
+.faq-question.active::after {
+    content: '−'; /* Minus sign for open state */
+}
+
+.faq-answer {
+    padding: 0 20px;
+    max-height: 0; /* Key for collapsing animation */
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+    background-color: #fff;
+}
+
+.faq-answer.open {
+    max-height: 200px; /* Adjust this value to be tall enough for your longest answer */
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+}
+
+.faq-answer p {
+    margin: 0;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .hero-content {
+        order: 2; /* Content below image on mobile */
+    }
+
+    .hero-image {
+        order: 1;
+        margin-bottom: 20px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .product-grid, .value-points {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .product-card, .point {
+        width: 100%;
+    }
+
+    .newsletter-form input[type="email"],
+    .newsletter-form .cta-button {
+        width: 100%;
+        margin-left: 0;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+
+    .newsletter-form .cta-button {
+        border-radius: 5px;
+    }
+}

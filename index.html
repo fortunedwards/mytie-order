@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="Handcrafted Italian silk ties for the modern gentleman. Elevate your wardrobe with our premier collection of luxury ties."/>
+    <title>Premium Quality Ties - MyTie</title>
+    <link rel="icon" type="image/jpeg" href="logo.jpg"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+        }
+        .font-serif-display {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Slider styles */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .slide.active-slide {
+            display: block;
+        }
+        .prev-button, .next-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 3px;
+            transition: background 0.3s;
+        }
+        .prev-button {
+            left: 10px;
+        }
+        .next-button {
+            right: 10px;
+        }
+        .prev-button:hover, .next-button:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#001F3F", 
+              "accent": "#f7b32b",
+              "background-light": "#F8F8F8",
+              "background-dark": "#101622",
+              "text-light": "#212121",
+              "text-dark": "#F8F8F8",
+              "text-muted-light": "#616f89",
+              "text-muted-dark": "#a0aec0",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"],
+              "serif-display": ["Playfair Display", "serif"],
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-solid border-gray-200 dark:border-gray-800">
+<div class="mx-auto flex max-w-7xl items-center justify-between whitespace-nowrap px-4 sm:px-6 lg:px-8 py-3">
+<div class="flex items-center gap-4 text-text-light dark:text-text-dark">
+<img src="mytie.png" alt="MyTie Logo" class="h-8 w-auto">
+</div>
+<div class="hidden md:flex flex-1 justify-end gap-8">
+<div class="flex items-center gap-9">
+<a class="text-text-light dark:text-text-dark text-sm font-medium hover:text-primary dark:hover:text-accent transition-colors" href="#product-showcase">Our Ties</a>
+<a class="text-text-light dark:text-text-dark text-sm font-medium hover:text-primary dark:hover:text-accent transition-colors" href="#value-prop">Craftsmanship</a>
+<a class="text-text-light dark:text-text-dark text-sm font-medium hover:text-primary dark:hover:text-accent transition-colors" href="#order-form">Contact</a>
+</div>
+</div>
+<div class="md:hidden">
+<button class="flex items-center justify-center p-2 rounded-lg bg-gray-100 dark:bg-gray-800">
+<span class="material-symbols-outlined text-text-light dark:text-text-dark">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1">
+<!-- HeroSection -->
+<section class="w-full">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-32">
+<div class="flex min-h-[480px] flex-col gap-6 bg-cover bg-center bg-no-repeat rounded-xl items-center justify-center p-4 text-center" data-alt="Close-up of a man in a sharp suit adjusting a luxurious silk tie" style='background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%), url("tie1.jpg");'>
+<div class="flex flex-col gap-4">
+<h1 class="text-white font-serif-display text-5xl font-black leading-tight tracking-tight sm:text-6xl lg:text-7xl">
+                                Elegance, Woven in Silk
+                            </h1>
+<h2 class="text-white/90 text-base font-normal leading-normal max-w-2xl mx-auto sm:text-lg">
+                                Discover handcrafted ties that define sophistication. A timeless statement for the modern professional.
+                            </h2>
+</div>
+<a href="#order-form" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
+<span class="truncate">Shop The Collection</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Product Showcase -->
+<section class="w-full" id="product-showcase">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+<h2 class="text-text-light dark:text-text-dark text-3xl font-serif-display font-bold leading-tight tracking-tight mb-8 text-center">Our Latest Collection</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="flex flex-col gap-4 group" id="tie-slider-1">
+<div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl overflow-hidden shadow-sm border border-gray-200 dark:border-gray-800 relative">
+<div class="slider-container">
+<div class="slide active-slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie3.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie6.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie7.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie8.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie9.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie10.jpg");'></div>
+</div>
+</div>
+<button class="prev-button" aria-label="Previous image">&#10094;</button>
+<button class="next-button" aria-label="Next image">&#10095;</button>
+</div>
+<div class="text-center">
+<p class="text-text-light dark:text-text-dark text-lg font-medium leading-normal">Collection #1</p>
+<p class="text-text-muted-light dark:text-text-muted-dark text-base font-normal leading-normal">₦19,999.00</p>
+<a class="text-primary dark:text-accent text-sm font-bold mt-1 inline-block opacity-0 group-hover:opacity-100 transition-opacity" href="#order-form">Buy Now</a>
+</div>
+</div>
+<div class="flex flex-col gap-4 group" id="tie-slider-2">
+<div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl overflow-hidden shadow-sm border border-gray-200 dark:border-gray-800 relative">
+<div class="slider-container">
+<div class="slide active-slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie4.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie11.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie12.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie13.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie14.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie15.jpg");'></div>
+</div>
+</div>
+<button class="prev-button" aria-label="Previous image">&#10094;</button>
+<button class="next-button" aria-label="Next image">&#10095;</button>
+</div>
+<div class="text-center">
+<p class="text-text-light dark:text-text-dark text-lg font-medium leading-normal">Collection #2</p>
+<p class="text-text-muted-light dark:text-text-muted-dark text-base font-normal leading-normal">₦19,999.00</p>
+<a class="text-primary dark:text-accent text-sm font-bold mt-1 inline-block opacity-0 group-hover:opacity-100 transition-opacity" href="#order-form">Buy Now</a>
+</div>
+</div>
+<div class="flex flex-col gap-4 group" id="tie-slider-3">
+<div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl overflow-hidden shadow-sm border border-gray-200 dark:border-gray-800 relative">
+<div class="slider-container">
+<div class="slide active-slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie5.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie16.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie17.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie18.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie19.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie20.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie21.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie22.jpg");'></div>
+</div>
+<div class="slide">
+<div class="w-full h-full bg-cover bg-center transform transition-transform duration-500 ease-in-out group-hover:scale-105" style='background-image: url("tie23.jpg");'></div>
+</div>
+</div>
+<button class="prev-button" aria-label="Previous image">&#10094;</button>
+<button class="next-button" aria-label="Next image">&#10095;</button>
+</div>
+<div class="text-center">
+<p class="text-text-light dark:text-text-dark text-lg font-medium leading-normal">Collection #3</p>
+<p class="text-text-muted-light dark:text-text-muted-dark text-base font-normal leading-normal">₦19,999.00</p>
+<a class="text-primary dark:text-accent text-sm font-bold mt-1 inline-block opacity-0 group-hover:opacity-100 transition-opacity" href="#order-form">Buy Now</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Value Proposition Section -->
+<section class="w-full bg-primary dark:bg-primary py-20 sm:py-24" id="value-prop">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col gap-4 text-center">
+<h1 class="text-white font-serif-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl max-w-3xl mx-auto">
+                            The Art of Craftsmanship
+                        </h1>
+<p class="text-white/80 text-base font-normal leading-normal max-w-3xl mx-auto sm:text-lg">
+                            Every tie is a masterpiece, meticulously crafted from the finest materials to ensure unparalleled quality and timeless style.
+                        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+<div class="flex flex-1 gap-4 rounded-xl bg-white/10 dark:bg-white/5 p-6 flex-col text-center items-center">
+<span class="material-symbols-outlined text-accent" style="font-size: 32px;">spa</span>
+<div class="flex flex-col gap-1">
+<h2 class="text-white text-lg font-bold leading-tight">100% Mulberry Silk</h2>
+<p class="text-white/80 text-sm font-normal leading-normal">Sourced from the most reputable suppliers for a superior feel and elegant drape.</p>
+</div>
+</div>
+<div class="flex flex-1 gap-4 rounded-xl bg-white/10 dark:bg-white/5 p-6 flex-col text-center items-center">
+<span class="material-symbols-outlined text-accent" style="font-size: 32px;">edit</span>
+<div class="flex flex-col gap-1">
+<h2 class="text-white text-lg font-bold leading-tight">Artisanal Handcrafting</h2>
+<p class="text-white/80 text-sm font-normal leading-normal">Each piece is carefully stitched by master artisans, a tradition of excellence.</p>
+</div>
+</div>
+<div class="flex flex-1 gap-4 rounded-xl bg-white/10 dark:bg-white/5 p-6 flex-col text-center items-center">
+<span class="material-symbols-outlined text-accent" style="font-size: 32px;">diamond</span>
+<div class="flex flex-col gap-1">
+<h2 class="text-white text-lg font-bold leading-tight">Timeless Design</h2>
+<p class="text-white/80 text-sm font-normal leading-normal">Our designs transcend trends, offering enduring style for any occasion.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials Section -->
+<section class="w-full">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
+<h2 class="text-text-light dark:text-text-dark text-3xl font-serif-display font-bold leading-tight tracking-tight text-center mb-12">What Our Clients Say</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="flex flex-col items-center text-center p-8 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark shadow-sm">
+<div class="flex text-accent mb-4">
+<span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span>
+</div>
+<blockquote class="text-text-muted-light dark:text-text-muted-dark italic mb-4">"The quality is simply unmatched. It's the perfect finishing touch for any executive wardrobe. I receive compliments every time I wear it."</blockquote>
+<p class="text-text-light dark:text-text-dark font-bold">- James R., CEO</p>
+</div>
+<div class="flex flex-col items-center text-center p-8 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark shadow-sm">
+<div class="flex text-accent mb-4">
+<span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span>
+</div>
+<blockquote class="text-text-muted-light dark:text-text-muted-dark italic mb-4">"From the moment you open the box, you know you're holding something special. The craftsmanship is evident in every stitch."</blockquote>
+<p class="text-text-light dark:text-text-dark font-bold">- David L., Senior Partner</p>
+</div>
+<div class="flex flex-col items-center text-center p-8 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark shadow-sm">
+<div class="flex text-accent mb-4">
+<span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span>
+</div>
+<blockquote class="text-text-muted-light dark:text-text-muted-dark italic mb-4">"A truly timeless piece. It has become my go-to for important meetings and events. A worthy investment in personal style."</blockquote>
+<p class="text-text-light dark:text-text-dark font-bold">- Michael B., Consultant</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Order Form Section -->
+<section class="w-full bg-gray-100 dark:bg-black/20" id="order-form">
+<div class="mx-auto max-w-2xl text-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+<h2 class="text-text-light dark:text-text-dark text-3xl font-serif-display font-bold leading-tight tracking-tight mb-4">Place Your Order</h2>
+<p class="text-text-muted-light dark:text-text-muted-dark mb-8">Fill out the form below to order your premium tie collection and we will reach out to you to help you make a selection of your choice.</p>
+<form class="max-w-lg mx-auto space-y-4 text-left newsletter-form" id="order-form">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="block text-text-light dark:text-text-dark text-sm font-medium mb-2">First Name</label>
+<input name="firstName" class="w-full h-12 px-4 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-primary dark:focus:ring-accent focus:border-transparent transition-shadow" placeholder="Enter first name" required type="text"/>
+</div>
+<div>
+<label class="block text-text-light dark:text-text-dark text-sm font-medium mb-2">Last Name</label>
+<input name="lastName" class="w-full h-12 px-4 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-primary dark:focus:ring-accent focus:border-transparent transition-shadow" placeholder="Enter last name" required type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-text-light dark:text-text-dark text-sm font-medium mb-2">Active Phone Number</label>
+<input name="phoneNumber" class="w-full h-12 px-4 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-primary dark:focus:ring-accent focus:border-transparent transition-shadow" placeholder="Enter phone number" required type="tel"/>
+</div>
+<div>
+<label class="block text-text-light dark:text-text-dark text-sm font-medium mb-2">Active WhatsApp Phone Number</label>
+<input name="whatsappNumber" class="w-full h-12 px-4 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-primary dark:focus:ring-accent focus:border-transparent transition-shadow" placeholder="Enter WhatsApp number" required type="tel"/>
+</div>
+<div>
+<label class="block text-text-light dark:text-text-dark text-sm font-medium mb-2">Your State</label>
+<select name="state" class="w-full h-12 px-4 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-primary dark:focus:ring-accent focus:border-transparent transition-shadow" required>
+<option value="">Select your state</option>
+<option value="Abia">Abia</option>
+<option value="Adamawa">Adamawa</option>
+<option value="Akwa Ibom">Akwa Ibom</option>
+<option value="Anambra">Anambra</option>
+<option value="Bauchi">Bauchi</option>
+<option value="Bayelsa">Bayelsa</option>
+<option value="Benue">Benue</option>
+<option value="Borno">Borno</option>
+<option value="Cross River">Cross River</option>
+<option value="Delta">Delta</option>
+<option value="Ebonyi">Ebonyi</option>
+<option value="Edo">Edo</option>
+<option value="Ekiti">Ekiti</option>
+<option value="Enugu">Enugu</option>
+<option value="FCT">FCT</option>
+<option value="Gombe">Gombe</option>
+<option value="Imo">Imo</option>
+<option value="Jigawa">Jigawa</option>
+<option value="Kaduna">Kaduna</option>
+<option value="Kano">Kano</option>
+<option value="Katsina">Katsina</option>
+<option value="Kebbi">Kebbi</option>
+<option value="Kogi">Kogi</option>
+<option value="Kwara">Kwara</option>
+<option value="Lagos">Lagos</option>
+<option value="Nasarawa">Nasarawa</option>
+<option value="Niger">Niger</option>
+<option value="Ogun">Ogun</option>
+<option value="Ondo">Ondo</option>
+<option value="Osun">Osun</option>
+<option value="Oyo">Oyo</option>
+<option value="Plateau">Plateau</option>
+<option value="Rivers">Rivers</option>
+<option value="Sokoto">Sokoto</option>
+<option value="Taraba">Taraba</option>
+<option value="Yobe">Yobe</option>
+<option value="Zamfara">Zamfara</option>
+</select>
+</div>
+<div>
+<label class="block text-text-light dark:text-text-dark text-sm font-medium mb-2">Delivery Address</label>
+<textarea name="deliveryAddress" class="w-full h-24 px-4 py-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-primary dark:focus:ring-accent focus:border-transparent transition-shadow resize-none" placeholder="Enter your full delivery address" required></textarea>
+</div>
+<div>
+<label class="block text-text-light dark:text-text-dark text-sm font-medium mb-2">Are you available to receive your Orders within 1-3 days?</label>
+<div class="flex gap-4">
+<label class="flex items-center">
+<input type="radio" name="availability" value="yes" class="mr-2" required/>
+<span class="text-text-light dark:text-text-dark">Yes</span>
+</label>
+<label class="flex items-center">
+<input type="radio" name="availability" value="no" class="mr-2" required/>
+<span class="text-text-light dark:text-text-dark">No</span>
+</label>
+</div>
+</div>
+<button class="w-full flex items-center justify-center h-12 px-6 rounded-lg bg-primary text-white font-bold hover:bg-primary/90 transition-colors" type="submit">Place Order</button>
+</form>
+<p class="text-red-500 text-sm mt-2 h-4 text-center error-message" aria-live="polite"></p>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="w-full" id="faq">
+<div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
+<h2 class="text-text-light dark:text-text-dark text-3xl font-serif-display font-bold leading-tight tracking-tight text-center mb-12">Frequently Asked Questions</h2>
+<div class="space-y-4">
+<details class="group rounded-lg bg-gray-100 dark:bg-gray-800/50 p-6 faq-item">
+<summary class="flex cursor-pointer list-none items-center justify-between font-medium faq-question">
+<span class="text-text-light dark:text-text-dark">Can I get more information about this?</span>
+<span class="text-text-muted-light dark:text-text-muted-dark transition group-open:rotate-180">
+<span class="material-symbols-outlined">expand_more</span>
+</span>
+</summary>
+<p class="group-open:animate-fadeIn mt-4 text-text-muted-light dark:text-text-muted-dark faq-answer">We sell ties in boxes. Each box contains three premium ties and it costs ₦19,999.</p>
+</details>
+<details class="group rounded-lg bg-gray-100 dark:bg-gray-800/50 p-6 faq-item">
+<summary class="flex cursor-pointer list-none items-center justify-between font-medium faq-question">
+<span class="text-text-light dark:text-text-dark">Can you deliver to my location?</span>
+<span class="text-text-muted-light dark:text-text-muted-dark transition group-open:rotate-180">
+<span class="material-symbols-outlined">expand_more</span>
+</span>
+</summary>
+<p class="group-open:animate-fadeIn mt-4 text-text-muted-light dark:text-text-muted-dark faq-answer">Yes, we deliver nationwide, even to your doorstep.</p>
+</details>
+<details class="group rounded-lg bg-gray-100 dark:bg-black/20 p-6 faq-item">
+<summary class="flex cursor-pointer list-none items-center justify-between font-medium faq-question">
+<span class="text-text-light dark:text-text-dark">Do you offer payment on delivery services?</span>
+<span class="text-text-muted-light dark:text-text-muted-dark transition group-open:rotate-180">
+<span class="material-symbols-outlined">expand_more</span>
+</span>
+</summary>
+<p class="group-open:animate-fadeIn mt-4 text-text-muted-light dark:text-text-muted-dark faq-answer">Yes, you can order a box of ties now and pay on delivery.</p>
+</details>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-gray-200 dark:border-gray-800">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+<div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">© 2025 MyTie. All Rights Reserved.</p>
+</div>
+</div>
+</footer>
+</div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
