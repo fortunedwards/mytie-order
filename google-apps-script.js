@@ -2,23 +2,23 @@
 // Deploy this as a web app with execute permissions set to "Anyone"
 
 function doPost(e) {
+  return handleRequest(e);
+}
+
+function doGet(e) {
+  return handleRequest(e);
+}
+
+function handleRequest(e) {
   try {
     const SHEET_ID = '1c7hOSsv3YOToXA3vTX2fHIFmH9D8cH0MdOwkPvqOF1s';
     const sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
     
-    // Get form data from different possible sources
-    let data = e.parameter || {};
+    // Get form data from parameters
+    const data = e.parameter || {};
     
-    // If no parameter data, try parsing the post data
-    if (Object.keys(data).length === 0 && e.postData) {
-      try {
-        data = JSON.parse(e.postData.contents);
-      } catch (parseError) {
-        // If JSON parsing fails, try URL-encoded data
-        const params = new URLSearchParams(e.postData.contents);
-        data = Object.fromEntries(params);
-      }
-    }
+    // Log the received data for debugging
+    console.log('Received data:', JSON.stringify(data));
     
     // Create headers if this is the first submission
     if (sheet.getLastRow() === 0) {
@@ -40,17 +40,16 @@ function doPost(e) {
       data.availability || 'N/A'
     ]);
     
+    console.log('Order saved successfully');
+    
     return ContentService
-      .createTextOutput(JSON.stringify({status: 'success', message: 'Order submitted successfully'}))
-      .setMimeType(ContentService.MimeType.JSON);
+      .createTextOutput('SUCCESS')
+      .setMimeType(ContentService.MimeType.TEXT);
       
   } catch (error) {
+    console.error('Error:', error.toString());
     return ContentService
-      .createTextOutput(JSON.stringify({status: 'error', message: error.toString()}))
-      .setMimeType(ContentService.MimeType.JSON);
+      .createTextOutput('ERROR: ' + error.toString())
+      .setMimeType(ContentService.MimeType.TEXT);
   }
-}
-
-function doGet(e) {
-  return doPost(e);
 }
