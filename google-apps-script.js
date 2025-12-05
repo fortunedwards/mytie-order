@@ -3,8 +3,8 @@
 
 function doPost(e) {
   try {
-    // Get the active spreadsheet (create one first and get its ID)
-    const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE'; // Replace with your actual sheet ID
+    // Get the active spreadsheet using the provided sheet ID
+    const SHEET_ID = '1c7hOSsv3YOToXA3vTX2fHIFmH9D8cH0MdOwkPvqOF1s';
     const sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
     
     // Parse the form data

@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Form data:', data);
             
             try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbyWQcmjb0swTfi12PSiUesKyvL8LOFTHaI_iazolL9J4B-YQ_m_JyhgqP_Xu1AY0kvMaA/exec', {
+                const response = await fetch('REPLACE_WITH_YOUR_NEW_GOOGLE_APPS_SCRIPT_URL', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
