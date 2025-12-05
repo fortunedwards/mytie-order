@@ -138,20 +138,23 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Form data:', data);
             
             try {
-                await fetch('https://script.google.com/macros/s/AKfycbyWQcmjb0swTfi12PSiUesKyvL8LOFTHaI_iazolL9J4B-YQ_m_JyhgqP_Xu1AY0kvMaA/exec', {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbyWQcmjb0swTfi12PSiUesKyvL8LOFTHaI_iazolL9J4B-YQ_m_JyhgqP_Xu1AY0kvMaA/exec', {
                     method: 'POST',
-                    mode: 'no-cors',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: JSON.stringify(data)
+                    body: new URLSearchParams(data)
                 });
                 
-                if (errorMessage) {
-                    errorMessage.textContent = '';
+                if (response.ok) {
+                    if (errorMessage) {
+                        errorMessage.textContent = '';
+                    }
+                    orderForm.reset();
+                    showSuccessPopup();
+                } else {
+                    throw new Error('Network response was not ok');
                 }
-                orderForm.reset();
-                showSuccessPopup();
                 
             } catch (error) {
                 console.error('Error:', error);
