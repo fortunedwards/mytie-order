@@ -113,9 +113,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorMessage = document.querySelector('.error-message');
     
     if (orderForm && orderForm.tagName === 'FORM') {
+        console.log('Order form found, adding event listener');
         orderForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            console.log('Form submitted');
+            console.log('JavaScript form submission triggered');
             
             // Show loading message
             if (errorMessage) {
