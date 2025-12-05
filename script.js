@@ -137,22 +137,28 @@ document.addEventListener('DOMContentLoaded', () => {
             
             console.log('Form data:', data);
             
-            try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbzCBLxirOEPVybjO1lMTcjiTzGV-rVPiFDaPBNJiOJSOu6z8bmKuItZbIHJECaIJGaR/exec', {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams(data)
-                });
-                
-                // With no-cors, we can't check response status, so assume success
-                if (errorMessage) {
-                    errorMessage.textContent = '';
-                }
-                orderForm.reset();
-                showSuccessPopup();
+            // Create email body with form data
+            const emailBody = `
+New MyTie Order:
+
+Name: ${data.firstName} ${data.lastName}
+Phone: ${data.phoneNumber}
+WhatsApp: ${data.whatsappNumber}
+State: ${data.state}
+Address: ${data.deliveryAddress}
+Availability: ${data.availability}
+Timestamp: ${data.timestamp}
+            `;
+            
+            // Open email client
+            const mailtoLink = `mailto:fortunedwards@gmail.com?subject=New MyTie Order&body=${encodeURIComponent(emailBody)}`;
+            window.open(mailtoLink);
+            
+            if (errorMessage) {
+                errorMessage.textContent = '';
+            }
+            orderForm.reset();
+            showSuccessPopup();
                 
             } catch (error) {
                 console.error('Error:', error);
