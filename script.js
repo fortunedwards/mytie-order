@@ -143,7 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
             
             console.log('Form data:', data);
             
-            // Create hidden iframe for submission
+            try {
+                // Create hidden iframe for submission
             const iframe = document.createElement('iframe');
             iframe.name = 'hidden_iframe';
             iframe.style.display = 'none';
