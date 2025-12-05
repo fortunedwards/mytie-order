@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyTie Orders - Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">MyTie Orders Dashboard</h1>
+        
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold">Orders</h2>
+                <div class="space-x-2">
+                    <button onclick="loadOrders()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Refresh</button>
+                    <button onclick="exportOrders()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Export JSON</button>
+                </div>
+            </div>
+            <div id="orders-container">Loading orders...</div>
+        </div>
+    </div>
+
+    <script>
+        async function loadOrders() {
+            try {
+                const response = await fetch('/api/orders');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayOrders(data.orders);
+                } else {
+                    document.getElementById('orders-container').innerHTML = 'Failed to load orders';
+                }
+            } catch (error) {
+                document.getElementById('orders-container').innerHTML = 'Error loading orders: ' + error.message;
+            }
+        }
+
+        function displayOrders(orders) {
+            const container = document.getElementById('orders-container');
+            
+            if (orders.length === 0) {
+                container.innerHTML = '<p class="text-gray-500">No orders yet.</p>';
+                return;
+            }
+
+            const table = `
+                <div class="overflow-x-auto">
+                    <table class="min-w-full table-auto">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-2 text-left">Date</th>
+                                <th class="px-4 py-2 text-left">Name</th>
+                                <th class="px-4 py-2 text-left">Phone</th>
+                                <th class="px-4 py-2 text-left">WhatsApp</th>
+                                <th class="px-4 py-2 text-left">State</th>
+                                <th class="px-4 py-2 text-left">Address</th>
+                                <th class="px-4 py-2 text-left">Available</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${orders.map(order => `
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="px-4 py-2">${new Date(order.timestamp).toLocaleDateString()}</td>
+                                    <td class="px-4 py-2">${order.firstName} ${order.lastName}</td>
+                                    <td class="px-4 py-2">${order.phoneNumber}</td>
+                                    <td class="px-4 py-2">${order.whatsappNumber}</td>
+                                    <td class="px-4 py-2">${order.state}</td>
+                                    <td class="px-4 py-2">${order.deliveryAddress}</td>
+                                    <td class="px-4 py-2">${order.availability}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                <p class="mt-4 text-sm text-gray-600">Total orders: ${orders.length}</p>
+            `;
+            
+            container.innerHTML = table;
+        }
+
+        async function exportOrders() {
+            try {
+                const response = await fetch('/api/orders');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const dataStr = JSON.stringify(data.orders, null, 2);
+                    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                    
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(dataBlob);
+                    link.download = `mytie-orders-${new Date().toISOString().split('T')[0]}.json`;
+                    link.click();
+                }
+            } catch (error) {
+                alert('Error exporting orders: ' + error.message);
+            }
+        }
+
+        // Load orders on page load
+        loadOrders();
+    </script>
+</body>
+</html>
