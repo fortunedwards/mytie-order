@@ -108,9 +108,13 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(shuffleHeroImage, 5000);
     }
 
-    // Form submission to Google Sheets
+    // Form submission debugging
+    console.log('Looking for order form...');
     const orderForm = document.getElementById('order-form');
     const errorMessage = document.querySelector('.error-message');
+    
+    console.log('Order form element:', orderForm);
+    console.log('Error message element:', errorMessage);
     
     if (orderForm && orderForm.tagName === 'FORM') {
         console.log('Order form found, adding event listener');
