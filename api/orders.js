@@ -14,7 +14,14 @@ export default async function handler(req, res) {
     try {
       // Check if GitHub token is available
       if (!GITHUB_TOKEN) {
-        throw new Error('GitHub token not configured. Add GITHUB_TOKEN to environment variables.');
+        console.log('GitHub token not configured. Logging order instead:', orderData);
+        res.status(200).json({ 
+          success: true, 
+          message: 'Order logged successfully (GitHub token not configured)',
+          orderId: orderData.id,
+          note: 'Add GITHUB_TOKEN to environment variables for permanent storage'
+        });
+        return;
       }
       
       console.log('Attempting to fetch orders from GitHub...');
