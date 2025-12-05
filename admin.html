@@ -10,9 +10,14 @@
     <div class="max-w-6xl mx-auto">
         <h1 class="text-3xl font-bold mb-6">MyTie Orders Dashboard</h1>
         
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+            <h3 class="font-semibold text-yellow-800 mb-2">📝 Note:</h3>
+            <p class="text-yellow-700">Orders are stored in memory and reset on each deployment. For persistent records, check your <a href="https://vercel.com/dashboard" target="_blank" class="underline">Vercel Function Logs</a>.</p>
+        </div>
+        
         <div class="bg-white rounded-lg shadow p-6 mb-6">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold">Orders</h2>
+                <h2 class="text-xl font-semibold">Current Session Orders</h2>
                 <div class="space-x-2">
                     <button onclick="loadOrders()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Refresh</button>
                     <button onclick="exportOrders()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Export JSON</button>

@@ -137,23 +137,27 @@ document.addEventListener('DOMContentLoaded', () => {
             
             console.log('Form data:', data);
             
-            const response = await fetch('/api/orders', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            });
-            
-            if (response.ok) {
-                if (errorMessage) {
-                    errorMessage.textContent = '';
+            try {
+                const response = await fetch('/api/orders', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                console.log('API response:', result);
+                
+                if (response.ok && result.success) {
+                    if (errorMessage) {
+                        errorMessage.textContent = '';
+                    }
+                    orderForm.reset();
+                    showSuccessPopup();
+                } else {
+                    throw new Error(result.message || 'Failed to submit order');
                 }
-                orderForm.reset();
-                showSuccessPopup();
-            } else {
-                throw new Error('Failed to submit order');
-            }
                 
             } catch (error) {
                 console.error('Error:', error);

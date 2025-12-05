@@ -1,29 +1,5 @@
-import fs from 'fs';
-import path from 'path';
-
-const ordersFile = path.join(process.cwd(), 'orders.json');
-
-function readOrders() {
-  try {
-    if (fs.existsSync(ordersFile)) {
-      const data = fs.readFileSync(ordersFile, 'utf8');
-      return JSON.parse(data);
-    }
-  } catch (error) {
-    console.error('Error reading orders:', error);
-  }
-  return [];
-}
-
-function saveOrders(orders) {
-  try {
-    fs.writeFileSync(ordersFile, JSON.stringify(orders, null, 2));
-    return true;
-  } catch (error) {
-    console.error('Error saving orders:', error);
-    return false;
-  }
-}
+// In-memory storage (resets on each deployment)
+let orders = [];
 
 export default function handler(req, res) {
   if (req.method === 'POST') {
@@ -33,29 +9,29 @@ export default function handler(req, res) {
       timestamp: new Date().toISOString()
     };
     
-    const orders = readOrders();
+    // Add to in-memory storage
     orders.push(orderData);
     
-    if (saveOrders(orders)) {
-      console.log('New order saved:', orderData);
-      res.status(200).json({ 
-        success: true, 
-        message: 'Order saved successfully',
-        orderId: orderData.id
-      });
-    } else {
-      res.status(500).json({ 
-        success: false, 
-        message: 'Failed to save order' 
-      });
-    }
+    // Log for debugging (visible in Vercel function logs)
+    console.log('=== NEW ORDER RECEIVED ===');
+    console.log(JSON.stringify(orderData, null, 2));
+    console.log('=== TOTAL ORDERS:', orders.length, '===');
+    
+    res.status(200).json({ 
+      success: true, 
+      message: 'Order received successfully',
+      orderId: orderData.id,
+      totalOrders: orders.length
+    });
+    
   } else if (req.method === 'GET') {
-    const orders = readOrders();
     res.status(200).json({ 
       success: true, 
       orders: orders,
-      count: orders.length 
+      count: orders.length,
+      note: 'Orders reset on each deployment. Check Vercel function logs for persistent records.'
     });
+    
   } else {
     res.status(405).json({ message: 'Method not allowed' });
   }
