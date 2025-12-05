@@ -137,28 +137,23 @@ document.addEventListener('DOMContentLoaded', () => {
             
             console.log('Form data:', data);
             
-            // Create email body with form data
-            const emailBody = `
-New MyTie Order:
-
-Name: ${data.firstName} ${data.lastName}
-Phone: ${data.phoneNumber}
-WhatsApp: ${data.whatsappNumber}
-State: ${data.state}
-Address: ${data.deliveryAddress}
-Availability: ${data.availability}
-Timestamp: ${data.timestamp}
-            `;
+            const response = await fetch('/api/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
             
-            // Open email client
-            const mailtoLink = `mailto:fortunedwards@gmail.com?subject=New MyTie Order&body=${encodeURIComponent(emailBody)}`;
-            window.open(mailtoLink);
-            
-            if (errorMessage) {
-                errorMessage.textContent = '';
+            if (response.ok) {
+                if (errorMessage) {
+                    errorMessage.textContent = '';
+                }
+                orderForm.reset();
+                showSuccessPopup();
+            } else {
+                throw new Error('Failed to submit order');
             }
-            orderForm.reset();
-            showSuccessPopup();
                 
             } catch (error) {
                 console.error('Error:', error);
