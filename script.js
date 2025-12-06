@@ -1,3 +1,37 @@
+// Meta Pixel tracking functions
+function trackViewContent() {
+    if (typeof fbq !== 'undefined') {
+        fbq('track', 'ViewContent', {
+            content_type: 'product',
+            content_category: 'Premium Ties',
+            value: 19999,
+            currency: 'NGN'
+        });
+    }
+}
+
+function trackInitiateCheckout() {
+    if (typeof fbq !== 'undefined') {
+        fbq('track', 'InitiateCheckout', {
+            content_type: 'product',
+            content_category: 'Premium Ties',
+            value: 19999,
+            currency: 'NGN'
+        });
+    }
+}
+
+function trackPurchase() {
+    if (typeof fbq !== 'undefined') {
+        fbq('track', 'Purchase', {
+            content_type: 'product',
+            content_category: 'Premium Ties',
+            value: 19999,
+            currency: 'NGN'
+        });
+    }
+}
+
 // Success popup function
 function showSuccessPopup() {
     const popup = document.createElement('div');
@@ -58,6 +92,8 @@ function setupSlider(sliderId) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Track page view for product content
+    trackViewContent();
     // Select all the buttons that act as the FAQ questions
     const faqQuestions = document.querySelectorAll('.faq-question');
 
@@ -156,6 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Clean up after submission
         setTimeout(() => {
             localStorage.removeItem('pendingOrderData');
+            trackPurchase(); // Track successful purchase
             showSuccessPopup();
             // Clean up URL
             window.history.replaceState({}, document.title, window.location.pathname);
@@ -167,6 +204,9 @@ document.addEventListener('DOMContentLoaded', () => {
         orderForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             console.log('JavaScript form submission triggered');
+            
+            // Track form submission
+            trackInitiateCheckout();
             
             // Show loading message
             if (errorMessage) {
